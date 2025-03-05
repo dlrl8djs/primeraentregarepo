@@ -1,9 +1,12 @@
 package com.example.proyecto1raentrega.models;
 
+import android.content.Context;
+
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
+import com.example.proyecto1raentrega.db.AppDatabase;
 import com.example.proyecto1raentrega.db.ListConverter;
 
 import java.util.List;
@@ -46,5 +49,14 @@ public class Coleccion {
 
     public void setPeliculasIds(List<Integer> peliculasIds) {
         this.peliculasIds = peliculasIds;
+    }
+    public String toString(Context context){
+        AppDatabase db = AppDatabase.getInstance(context);
+        String s = "Coleccion( id: "+id+" | nombre: "+nombre+" | Peliculas( ";
+        for( int id : peliculasIds){
+            s+=db.peliculaDao().getPeliculaById(id)+" ";
+        }
+        s+=")";
+        return s;
     }
 }

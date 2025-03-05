@@ -1,6 +1,8 @@
 package com.example.proyecto1raentrega.db;
 
 
+import static androidx.room.OnConflictStrategy.REPLACE;
+
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -13,7 +15,7 @@ import java.util.List;
 @Dao
 public interface ColeccionDao {
 
-    @Insert
+    @Insert(onConflict = REPLACE)
     void insert(Coleccion coleccion);
 
     @Delete
@@ -24,4 +26,7 @@ public interface ColeccionDao {
 
     @Query("SELECT * FROM colecciones WHERE id = :id")
     Coleccion getColeccionById(int id);
+
+    @Query("SELECT * FROM colecciones WHERE nombre = :nombre")
+    Coleccion getColeccionByNombre(String nombre);
 }

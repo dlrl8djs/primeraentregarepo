@@ -38,4 +38,9 @@ public class Pelicula {
         this.estreno = estreno;
     }
 
+    @Override
+    public String toString(){
+        return "Pelicula( id: "+id+" | titulo: "+titulo+" | estreno: " + estreno +" )";
+    }
+
 }
