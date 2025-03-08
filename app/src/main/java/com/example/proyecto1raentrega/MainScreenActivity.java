@@ -2,16 +2,12 @@ package com.example.proyecto1raentrega;
 
 import android.os.Bundle;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-import android.os.Bundle;
+
 import android.util.Log;
 import com.example.proyecto1raentrega.db.AppDatabase;
-import com.example.proyecto1raentrega.models.Coleccion;
-import com.example.proyecto1raentrega.models.Pelicula;
+import com.example.proyecto1raentrega.models.ColeccionEntity;
+import com.example.proyecto1raentrega.models.PeliculaEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,33 +27,33 @@ public class MainScreenActivity extends AppCompatActivity {
             db.getOpenHelper().getWritableDatabase().execSQL("DELETE FROM peliculas");
             db.getOpenHelper().getWritableDatabase().execSQL("DELETE FROM colecciones");
 
-            ArrayList<Pelicula> alp = new ArrayList<Pelicula>();
-            alp.add(new Pelicula("Pelicula 1 titulo", 1920));
-            alp.add(new Pelicula("Pelicula 2 titulo", 2026));
-            alp.add(new Pelicula("Pelicula 3 titulo", 2020));
-            alp.add(new Pelicula("Pelicula 4 titulo", 1960));
-            alp.add(new Pelicula("Pelicula 5 titulo", 2005));
+            ArrayList<PeliculaEntity> alp = new ArrayList<PeliculaEntity>();
+            alp.add(new PeliculaEntity("Pelicula 1 titulo", 1920));
+            alp.add(new PeliculaEntity("Pelicula 2 titulo", 2026));
+            alp.add(new PeliculaEntity("Pelicula 3 titulo", 2020));
+            alp.add(new PeliculaEntity("Pelicula 4 titulo", 1960));
+            alp.add(new PeliculaEntity("Pelicula 5 titulo", 2005));
 
-            for(Pelicula p : alp){
+            for(PeliculaEntity p : alp){
                 db.peliculaDao().insert(p);
             }
 
-            List<Pelicula> listaps = db.peliculaDao().getAllPeliculas();
-            for(Pelicula p : listaps){
+            List<PeliculaEntity> listaps = db.peliculaDao().getAllPeliculas();
+            for(PeliculaEntity p : listaps){
                 Log.d("Prueba peliculas creadas", "pelicula: "+p);
             }
 
 
             List<Integer> peliculasIds = Arrays.asList(listaps.get(0).getId(),listaps.get(2).getId());
-            Coleccion coleccion = new Coleccion("Coleccion de de prueba 1", peliculasIds);
-            db.coleccionDao().insert(coleccion);
+            ColeccionEntity coleccionEntity = new ColeccionEntity("Coleccion de de prueba 1", peliculasIds);
+            db.coleccionDao().insert(coleccionEntity);
 
             peliculasIds = Arrays.asList(listaps.get(1).getId(),listaps.get(3).getId());
-            coleccion = new Coleccion("Coleccion de de prueba 2", peliculasIds);
-            db.coleccionDao().insert(coleccion);
+            coleccionEntity = new ColeccionEntity("Coleccion de de prueba 2", peliculasIds);
+            db.coleccionDao().insert(coleccionEntity);
 
-            Coleccion c1 = db.coleccionDao().getColeccionByNombre("Coleccion de de prueba 1");
-            Coleccion c2 = db.coleccionDao().getColeccionByNombre("Coleccion de de prueba 2");
+            ColeccionEntity c1 = db.coleccionDao().getColeccionByNombre("Coleccion de de prueba 1");
+            ColeccionEntity c2 = db.coleccionDao().getColeccionByNombre("Coleccion de de prueba 2");
 
             Log.d("Colec 1", c1.toString(this));
             Log.d("Colec 2",c2.toString(this));

@@ -12,7 +12,7 @@ import com.example.proyecto1raentrega.db.ListConverter;
 import java.util.List;
 
 @Entity(tableName = "colecciones")
-public class Coleccion {
+public class ColeccionEntity {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -22,7 +22,7 @@ public class Coleccion {
     @TypeConverters(ListConverter.class)
     private List<Integer> peliculasIds;
 
-    public Coleccion(String nombre, List<Integer> peliculasIds) {
+    public ColeccionEntity(String nombre, List<Integer> peliculasIds) {
         this.nombre = nombre;
         this.peliculasIds = peliculasIds;
     }

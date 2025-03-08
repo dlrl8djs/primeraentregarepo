@@ -4,7 +4,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "peliculas")
-public class Pelicula {
+public class PeliculaEntity {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -12,7 +12,7 @@ public class Pelicula {
     private String titulo;
     private int estreno;
 
-    public Pelicula(String titulo, int estreno) {
+    public PeliculaEntity(String titulo, int estreno) {
         this.titulo = titulo;
         this.estreno = estreno;
     }

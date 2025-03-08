@@ -8,7 +8,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import com.example.proyecto1raentrega.models.Coleccion;
+import com.example.proyecto1raentrega.models.ColeccionEntity;
 
 import java.util.List;
 
@@ -16,17 +16,17 @@ import java.util.List;
 public interface ColeccionDao {
 
     @Insert(onConflict = REPLACE)
-    void insert(Coleccion coleccion);
+    void insert(ColeccionEntity coleccionEntity);
 
     @Delete
-    void delete(Coleccion coleccion);
+    void delete(ColeccionEntity coleccionEntity);
 
     @Query("SELECT * FROM colecciones")
-    List<Coleccion> getAllColecciones();
+    List<ColeccionEntity> getAllColecciones();
 
     @Query("SELECT * FROM colecciones WHERE id = :id")
-    Coleccion getColeccionById(int id);
+    ColeccionEntity getColeccionById(int id);
 
     @Query("SELECT * FROM colecciones WHERE nombre = :nombre")
-    Coleccion getColeccionByNombre(String nombre);
+    ColeccionEntity getColeccionByNombre(String nombre);
 }
