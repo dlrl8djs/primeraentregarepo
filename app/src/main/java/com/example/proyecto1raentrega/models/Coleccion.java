@@ -49,12 +49,11 @@ public class Coleccion {
         if (!peliculas.contains(pelicula)) {
             peliculas.add(pelicula);
         }
-        //this.persist(db);
+
     }
 
     public void removePelicula(Pelicula pelicula, AppDatabase db) {
         peliculas.remove(pelicula);
-        //this.persist(db);
     }
 
     public void persist(AppDatabase db) {
@@ -67,19 +66,15 @@ public class Coleccion {
         ColeccionEntity entity = new ColeccionEntity(this.nombre, peliculasIds);
         entity.setId(this.id);
 
-        //new Thread(() -> {
-            db.coleccionDao().insert(entity);
-            //Log.d("PERSIST USADO", this.toString());
-        //}).start();
+        long newid = db.coleccionDao().insert(entity);
+        this.id=(int)newid;
     }
 
     public void delete(AppDatabase db) {
         ColeccionEntity entity = new ColeccionEntity(this.nombre, new ArrayList<>());
         entity.setId(this.id);
 
-        //new Thread(() -> {
             db.coleccionDao().delete(entity);
-        //}).start();
 
     }
 
@@ -103,7 +98,6 @@ public class Coleccion {
 
     public static ArrayList<Coleccion> getAllColecciones(AppDatabase db){
         List<ColeccionEntity> listacs = db.coleccionDao().getAllColecciones();
-        //Log.d("GETALLCOLS COLECENTITY LIST",""+listacs.size());
         ArrayList<Coleccion> alcol = new ArrayList<>();
         for(ColeccionEntity entity : listacs){
             alcol.add(getById(db, entity.getId()));

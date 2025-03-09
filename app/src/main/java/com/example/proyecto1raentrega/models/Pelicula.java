@@ -46,24 +46,21 @@ public class Pelicula {
         PeliculaEntity entity = new PeliculaEntity(this.titulo, this.estreno);
         entity.setId(this.id);
 
-        //new Thread(() -> {
-            db.peliculaDao().insert(entity);
-        //}).start();
+        long newid = db.peliculaDao().insert(entity);
+        this.id=(int)newid;
     }
 
     public void delete(AppDatabase db) {
         PeliculaEntity entity = new PeliculaEntity(this.titulo, this.estreno);
         entity.setId(this.id);
 
-        //new Thread(() -> {
-            ArrayList<Coleccion> alcs = Coleccion.getAllColecciones(db);
-            for(Coleccion c : alcs){
-                if(c.getPeliculas().contains(this)){
-                    c.removePelicula(this, db);
-                }
+        ArrayList<Coleccion> alcs = Coleccion.getAllColecciones(db);
+        for(Coleccion c : alcs){
+            if(c.getPeliculas().contains(this)){
+                c.removePelicula(this, db);
             }
-            db.peliculaDao().delete(entity);
-        //}).start();
+        }
+        db.peliculaDao().delete(entity);
     }
 
     public static Pelicula getById(AppDatabase db, int id) {

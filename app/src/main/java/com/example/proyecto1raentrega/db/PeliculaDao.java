@@ -14,7 +14,7 @@ import java.util.List;
 public interface PeliculaDao {
 
     @Insert(onConflict = REPLACE)
-    void insert(PeliculaEntity peliculaEntity);
+    long insert(PeliculaEntity peliculaEntity);
 
     @Delete
     void delete(PeliculaEntity peliculaEntity);

@@ -14,7 +14,7 @@ import java.util.List;
 public interface ColeccionDao {
 
     @Insert(onConflict = REPLACE)
-    void insert(ColeccionEntity coleccionEntity);
+    long insert(ColeccionEntity coleccionEntity);
 
     @Delete
     void delete(ColeccionEntity coleccionEntity);
