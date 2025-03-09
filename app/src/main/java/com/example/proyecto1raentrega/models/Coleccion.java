@@ -1,30 +1,24 @@
 package com.example.proyecto1raentrega.models;
 
 import android.content.Context;
-
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
-import androidx.room.TypeConverters;
+import android.util.Log;
 
 import com.example.proyecto1raentrega.db.AppDatabase;
-import com.example.proyecto1raentrega.db.ListConverter;
+import com.example.proyecto1raentrega.db.ColeccionEntity;
+import com.example.proyecto1raentrega.db.PeliculaEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 
-@Entity(tableName = "colecciones")
 public class Coleccion {
 
-    @PrimaryKey(autoGenerate = true)
     private int id;
-
     private String nombre;
+    private ArrayList<Pelicula> peliculas;
 
-    @TypeConverters(ListConverter.class)
-    private List<Integer> peliculasIds;
-
-    public Coleccion(String nombre, List<Integer> peliculasIds) {
+    public Coleccion(String nombre) {
         this.nombre = nombre;
-        this.peliculasIds = peliculasIds;
+        this.peliculas = new ArrayList<>();
     }
 
     public int getId() {
@@ -43,18 +37,93 @@ public class Coleccion {
         this.nombre = nombre;
     }
 
-    public List<Integer> getPeliculasIds() {
-        return peliculasIds;
+    public ArrayList<Pelicula> getPeliculas() {
+        return peliculas;
     }
 
-    public void setPeliculasIds(List<Integer> peliculasIds) {
-        this.peliculasIds = peliculasIds;
+    public void setPeliculas(ArrayList<Pelicula> peliculas) {
+        this.peliculas = peliculas;
     }
-    public String toString(Context context){
-        AppDatabase db = AppDatabase.getInstance(context);
+
+    public void addPelicula(Pelicula pelicula, AppDatabase db) {
+        if (!peliculas.contains(pelicula)) {
+            peliculas.add(pelicula);
+        }
+
+    }
+
+    public void removePelicula(Pelicula pelicula, AppDatabase db) {
+        peliculas.remove(pelicula);
+    }
+
+    public void persist(AppDatabase db) {
+
+        List<Integer> peliculasIds = new ArrayList<>();
+        for (Pelicula pelicula : peliculas) {
+            peliculasIds.add(pelicula.getId());
+        }
+
+        ColeccionEntity entity = new ColeccionEntity(this.nombre, peliculasIds);
+        entity.setId(this.id);
+
+        long newid = db.coleccionDao().insert(entity);
+        this.id=(int)newid;
+    }
+
+    public void delete(AppDatabase db) {
+        ColeccionEntity entity = new ColeccionEntity(this.nombre, new ArrayList<>());
+        entity.setId(this.id);
+
+            db.coleccionDao().delete(entity);
+
+    }
+
+    public static Coleccion getById(AppDatabase db, int id) {
+        ColeccionEntity entity = db.coleccionDao().getColeccionById(id);
+        if (entity != null) {
+            Coleccion coleccion = new Coleccion(entity.getNombre());
+
+            for (int peliculaId : entity.getPeliculasIds()) {
+                Pelicula pelicula = Pelicula.getById(db, peliculaId);
+                if (pelicula != null) {
+                    coleccion.addPelicula(pelicula, db);
+                }
+            }
+
+            coleccion.setId(entity.getId());
+            return coleccion;
+        }
+        return null;
+    }
+
+    public static ArrayList<Coleccion> getAllColecciones(AppDatabase db){
+        List<ColeccionEntity> listacs = db.coleccionDao().getAllColecciones();
+        ArrayList<Coleccion> alcol = new ArrayList<>();
+        for(ColeccionEntity entity : listacs){
+            alcol.add(getById(db, entity.getId()));
+        }
+        return alcol;
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if (o == this) {
+            return true;
+        }
+
+        if (!(o instanceof Coleccion)) {
+            return false;
+        }
+
+        Coleccion c = (Coleccion) o;
+
+        return c.id==this.id;
+    }
+
+    public String toString(){
         String s = "Coleccion( id: "+id+" | nombre: "+nombre+" | Peliculas( ";
-        for( int id : peliculasIds){
-            s+=db.peliculaDao().getPeliculaById(id)+" ";
+        for( Pelicula p : peliculas){
+            s+=p+" ";
         }
         s+=")";
         return s;

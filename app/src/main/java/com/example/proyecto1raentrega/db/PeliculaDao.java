@@ -8,26 +8,23 @@ import androidx.room.Insert;
 import androidx.room.Query;
 
 
-import com.example.proyecto1raentrega.models.Coleccion;
-import com.example.proyecto1raentrega.models.Pelicula;
-
 import java.util.List;
 
 @Dao
 public interface PeliculaDao {
 
     @Insert(onConflict = REPLACE)
-    void insert(Pelicula pelicula);
+    long insert(PeliculaEntity peliculaEntity);
 
     @Delete
-    void delete(Pelicula pelicula);
+    void delete(PeliculaEntity peliculaEntity);
 
     @Query("SELECT * FROM peliculas")
-    List<Pelicula> getAllPeliculas();
+    List<PeliculaEntity> getAllPeliculas();
 
     @Query("SELECT * FROM peliculas WHERE id = :id")
-    Pelicula getPeliculaById(int id);
+    PeliculaEntity getPeliculaById(int id);
 
     @Query("SELECT * FROM peliculas WHERE titulo = :titulo")
-    Pelicula getPeliculaByTitulo(String titulo);
+    PeliculaEntity getPeliculaByTitulo(String titulo);
 }

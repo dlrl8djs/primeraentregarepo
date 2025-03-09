@@ -5,10 +5,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import android.content.Context;
 
-import com.example.proyecto1raentrega.models.Coleccion;
-import com.example.proyecto1raentrega.models.Pelicula;
-
-@Database(entities = {Pelicula.class, Coleccion.class}, version = 2)
+@Database(entities = {PeliculaEntity.class, ColeccionEntity.class}, version = 2)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase INSTANCE;
