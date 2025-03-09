@@ -8,8 +8,6 @@ import androidx.room.Insert;
 import androidx.room.Query;
 
 
-import com.example.proyecto1raentrega.models.PeliculaEntity;
-
 import java.util.List;
 
 @Dao

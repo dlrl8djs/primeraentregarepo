@@ -1,13 +1,10 @@
-package com.example.proyecto1raentrega.models;
+package com.example.proyecto1raentrega.db;
 
 import android.content.Context;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
-
-import com.example.proyecto1raentrega.db.AppDatabase;
-import com.example.proyecto1raentrega.db.ListConverter;
 
 import java.util.List;
 

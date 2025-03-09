@@ -5,9 +5,6 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import android.content.Context;
 
-import com.example.proyecto1raentrega.models.ColeccionEntity;
-import com.example.proyecto1raentrega.models.PeliculaEntity;
-
 @Database(entities = {PeliculaEntity.class, ColeccionEntity.class}, version = 2)
 public abstract class AppDatabase extends RoomDatabase {
 

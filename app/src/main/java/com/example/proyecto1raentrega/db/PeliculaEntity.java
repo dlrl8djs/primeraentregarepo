@@ -1,4 +1,4 @@
-package com.example.proyecto1raentrega.models;
+package com.example.proyecto1raentrega.db;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
